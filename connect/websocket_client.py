@@ -16,19 +16,22 @@ class WebsocketWrapper:
             'id': 1}
         self.logger = logger.Logger('journal.log')
 
+    # connect subscription request
+    def connect_ws(self):
+        self.ws.send(json.dumps(self.subscription))
+
     def on_open(self, ws):
-        def connect_ws(*args):
-            ws.send(json.dumps(self.subscription))
-        connect_ws()
+        self.logger.log_message('connecting websocket on open')
+        self.connect_ws()
 
     def on_message(self, ws, message):
         self.logger.log_info(message)
 
     def on_error(self, ws, error):
-        print(error)
+        self.logger.log_message('error occurred')
 
     def on_close(self, ws):
-        print('closed')
+        self.logger.log_message('websocket closed')
 
     def connect(self):
         self.ws = websocket.WebSocketApp(

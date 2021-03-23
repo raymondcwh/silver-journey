@@ -1,5 +1,6 @@
 import os
 import logging
+import datetime as dt
 from logging.handlers import TimedRotatingFileHandler
 from core import root
 
@@ -16,6 +17,10 @@ class Logger:
 
     def log_info(self, msg):
         self.logger.info(msg)
+
+    # print message with formatting (non-logging)
+    def log_message(self, msg):
+        print('>>> %s : <%s>' % (dt.datetime.now(), msg))
 
 
 if __name__ == '__main__':
